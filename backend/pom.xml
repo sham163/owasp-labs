@@ -15,26 +15,37 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <!-- Import Spring Boot's BOM to lock all transitive versions (SLF4J/Logback, etc.) -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
+    <!-- versions omitted: now managed by the BOM -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.7.3</version>
     </dependency>
 
-    <!-- Intentionally outdated for A06: Vulnerable/Outdated Components demo -->
+    <!-- Intentionally outdated for A06 demo -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
@@ -45,7 +56,7 @@
   <build>
     <finalName>secure-university</finalName>
     <plugins>
-      <!-- Ensure Java 17 compilation since we don't use the Spring Boot parent -->
+      <!-- Java 17 compilation -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -55,10 +66,19 @@
         </configuration>
       </plugin>
 
+      <!-- Make the jar executable (fat jar) -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <mainClass>com.secureuniversity.SecureUniversityApplication</mainClass>
         </configuration>

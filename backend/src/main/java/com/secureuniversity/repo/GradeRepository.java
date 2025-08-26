@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class GradeRepository {
@@ -20,5 +21,19 @@ public class GradeRepository {
 
     public List<Grade> byStudentId(long studentId) {
         return jdbc.query("select * from grades where student_id = " + studentId, map);
+    }
+
+    public List<Map<String,Object>> byStudentIdJoinCourse(long studentId) {
+        String sql = "select c.name as course, g.grade_value as grade from grades g join courses c on c.id=g.course_id where g.student_id="+studentId;
+        return jdbc.query(sql, (rs,i)-> Map.of("course", rs.getString("course"), "grade", rs.getString("grade")));
+    }
+
+    public void upsert(long studentId, long courseId, String grade) {
+        int n = jdbc.update("update grades set grade_value=? where student_id=? and course_id=?",
+                grade, studentId, courseId);
+        if (n==0) {
+            jdbc.update("insert into grades(student_id,course_id,grade_value) values(?,?,?)",
+                    studentId, courseId, grade);
+        }
     }
 }

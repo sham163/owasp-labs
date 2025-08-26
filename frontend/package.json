@@ -1,7 +1,7 @@
 {
   "name": "owasp-labs-ui",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.26.2",
+    "@mui/material": "5.15.14",
+    "@emotion/react": "11.11.4",
+    "@emotion/styled": "11.11.5"
   },
   "devDependencies": {
     "vite": "5.4.2",

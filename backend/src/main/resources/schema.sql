@@ -1,7 +1,8 @@
-drop table if exists users cascade;
-drop table if exists courses cascade;
-drop table if exists grades cascade;
+drop table if exists enrollments cascade;
 drop table if exists forum_posts cascade;
+drop table if exists grades cascade;
+drop table if exists courses cascade;
+drop table if exists users cascade;
 
 create table users(
   id bigserial primary key,
@@ -28,5 +29,12 @@ create table forum_posts(
   id bigserial primary key,
   author_id bigint not null references users(id) on delete cascade,
   content text not null,
+  created_at timestamp not null default now()
+);
+
+create table enrollments(
+  id bigserial primary key,
+  student_id bigint not null references users(id) on delete cascade,
+  course_id bigint not null references courses(id) on delete cascade,
   created_at timestamp not null default now()
 );
