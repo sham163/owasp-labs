@@ -3,7 +3,8 @@ package com.secureuniversity.controller;
 import com.secureuniversity.model.User;
 import com.secureuniversity.repo.UserRepository;
 import com.secureuniversity.util.CryptoUtil;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
@@ -54,5 +55,22 @@ public class AuthController {
             return Map.of("status","ok","user", Map.of("id", u.getId(), "username", u.getUsername(), "role", u.getRole()));
         }
         return Map.of("status","error","message","invalid creds");
+    }
+
+    @PostMapping("/logout")
+    public Object logout(HttpServletResponse resp) {
+        // expire rememberMe and JSESSIONID
+        Cookie rm = new Cookie("rememberMe", "");
+        rm.setPath("/");
+        rm.setMaxAge(0);
+        rm.setHttpOnly(false);
+        resp.addCookie(rm);
+
+        Cookie js = new Cookie("JSESSIONID", "");
+        js.setPath("/");
+        js.setMaxAge(0);
+        resp.addCookie(js);
+
+        return Map.of("status","ok");
     }
 }

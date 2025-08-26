@@ -10,7 +10,7 @@ const NavBtn = ({ to, children }) => (
 );
 
 export default function Layout({ children }) {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -26,9 +26,14 @@ export default function Layout({ children }) {
           <NavBtn to="/files">Files</NavBtn>
           {user?.role === 'ADMIN' && <NavBtn to="/admin">Admin</NavBtn>}
           <Box sx={{ flex: 1 }} />
-          {user?.username
-            ? <Typography>Signed in as <b>{user.username}</b></Typography>
-            : <Button variant="outlined" color="inherit" onClick={() => navigate('/login')}>Login</Button>}
+          {user?.username ? (
+            <>
+              <Typography sx={{ mr: 1 }}>Hi, <b>{user.username}</b></Typography>
+              <Button color="inherit" variant="outlined" onClick={logout}>Logout</Button>
+            </>
+          ) : (
+            <Button variant="outlined" color="inherit" onClick={() => navigate('/login')}>Login</Button>
+          )}
         </Toolbar>
       </AppBar>
       <Container sx={{ py: 3 }}>
