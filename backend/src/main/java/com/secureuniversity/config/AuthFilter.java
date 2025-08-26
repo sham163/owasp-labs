@@ -5,12 +5,12 @@ import com.secureuniversity.model.User;
 import com.secureuniversity.util.CryptoUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Base64;
 
 @Component
 public class AuthFilter implements Filter {
@@ -37,7 +37,7 @@ public class AuthFilter implements Filter {
                         .findFirst()
                         .ifPresent(c -> {
                             try {
-                                String decoded = new String(Base64.decodeBase64(c.getValue()), StandardCharsets.UTF_8);
+                                String decoded = new String(Base64.getDecoder().decode(c.getValue()), StandardCharsets.UTF_8);
                                 String[] parts = decoded.split(":", 2);
                                 if (parts.length == 2) {
                                     String u = parts[0];

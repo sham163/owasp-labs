@@ -4,10 +4,10 @@ import com.secureuniversity.model.User;
 import com.secureuniversity.repo.UserRepository;
 import com.secureuniversity.util.CryptoUtil;
 import jakarta.servlet.http.*;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Map;
 
 @RestController
@@ -40,7 +40,7 @@ public class AuthController {
         if (u != null && u.getPasswordMd5().equalsIgnoreCase(CryptoUtil.md5(password))) {
             if (remember) {
                 String token = username + ":" + password;
-                String b64 = Base64.encodeBase64String(token.getBytes(StandardCharsets.UTF_8));
+                String b64 = Base64.getEncoder().encodeToString(token.getBytes(StandardCharsets.UTF_8));
                 Cookie c = new Cookie("rememberMe", b64);
                 c.setPath("/");
                 c.setHttpOnly(false);
