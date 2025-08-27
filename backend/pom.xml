@@ -51,6 +51,13 @@
       <artifactId>commons-text</artifactId>
       <version>1.9</version>
     </dependency>
+
+    <!-- For file operations -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.11.0</version>
+    </dependency>
   </dependencies>
 
   <build>
