@@ -24,6 +24,8 @@ export default function Layout({ children }) {
           <NavBtn to="/forum">Forum</NavBtn>
           <NavBtn to="/grades">My Grades</NavBtn>
           <NavBtn to="/files">Files</NavBtn>
+          <NavBtn to="/labs">Labs</NavBtn>
+          <NavBtn to="/vulnlabs">Security Tests</NavBtn>
           {user?.role === 'ADMIN' && <NavBtn to="/admin">Admin</NavBtn>}
           <Box sx={{ flex: 1 }} />
           {user?.username ? (
@@ -40,7 +42,7 @@ export default function Layout({ children }) {
         {children}
         <Box sx={{ mt: 6, textAlign: 'center', color: 'text.secondary' }}>
           <small>
-            Training app. Labs live under <Link to="/labs">/labs</Link>.
+            Training app. Labs live under <Link to="/labs">/labs</Link>. Security testing at <Link to="/vulnlabs">/vulnlabs</Link>.
           </small>
         </Box>
       </Container>

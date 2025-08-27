@@ -12,6 +12,7 @@ import Forum from './pages/Forum';
 import Files from './pages/Files';
 import Admin from './pages/Admin';
 import Labs from './pages/Labs';
+import VulnLabs from './pages/VulnLabs';
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/files" element={<ProtectedRoute><Files/></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute role="ADMIN"><Admin/></ProtectedRoute>} />
             <Route path="/labs" element={<Labs/>}/>
+            <Route path="/vulnlabs" element={<VulnLabs/>}/>
             <Route path="*" element={<div>Not Found</div>}/>
           </Routes>
         </Layout>
